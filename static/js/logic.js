@@ -2,7 +2,7 @@
 console.log("working");
 
 // Create the map object with a center and zoom level.
-let map = L.map('mapid').setView([44.0, -80.0], 2.5);
+let map = L.map('mapid').setView([30, 30], 2);
 
 // // Get data from cities.js
 // let cityData = cities;
@@ -17,25 +17,25 @@ let map = L.map('mapid').setView([44.0, -80.0], 2.5);
 
 
 
-// Add GeoJSON data.
-let sanFranAirport =
-{"type":"FeatureCollection","features":[{
-    "type":"Feature",
-    "properties":{
-        "id":"3469",
-        "name":"San Francisco International Airport",
-        "city":"San Francisco",
-        "country":"United States",
-        "faa":"SFO",
-        "icao":"KSFO",
-        "alt":"13",
-        "tz-offset":"-8",
-        "dst":"A",
-        "tz":"America/Los_Angeles"},
-        "geometry":{
-            "type":"Point",
-            "coordinates":[-122.375,37.61899948120117]}}
-]};
+// // Add GeoJSON data.
+// let sanFranAirport =
+// {"type":"FeatureCollection","features":[{
+//     "type":"Feature",
+//     "properties":{
+//         "id":"3469",
+//         "name":"San Francisco International Airport",
+//         "city":"San Francisco",
+//         "country":"United States",
+//         "faa":"SFO",
+//         "icao":"KSFO",
+//         "alt":"13",
+//         "tz-offset":"-8",
+//         "dst":"A",
+//         "tz":"America/Los_Angeles"},
+//         "geometry":{
+//             "type":"Point",
+//             "coordinates":[-122.375,37.61899948120117]}}
+// ]};
 
 // L.geoJson(sanFranAirport, {
 //     // We turn each feature into a marker on the map.
@@ -69,17 +69,68 @@ let sanFranAirport =
 //   }).addTo(map);
 // });
 
-let torontoData = "https://raw.githubusercontent.com/jamesdemott/Mapping_Earthquakes/main/torontoRoutes.json"
+// let torontoData = "https://raw.githubusercontent.com/jamesdemott/Mapping_Earthquakes/main/torontoRoutes.json"
 
-d3.json(torontoData).then(function(data){
-    console.log(data);
+// d3.json(torontoData).then(function(data){
+//     console.log(data);
+//     L.geoJson(data, {
+//         onEachFeature: function(feature, layer){
+//             console.log(layer);
+//             layer.bindPopup("<h1>" + feature.properties.dst + "</h1>")
+//         }
+//     }).addTo(map);
+// })
+
+// let torontoHoods = "https://raw.githubusercontent.com/jamesdemott/Mapping_Earthquakes/Mapping_GeoJSON_Polygons/torontoNeighborhoods.json"; 
+
+// d3.json(torontoHoods).then(function(data){
+//     console.log(data);
+//     L.geoJson(data, {
+//         weight: 1, 
+//         fillColor: 'yellow';
+//         layer.b¬indPopup("<h1>" + feature.properties.AREA_NAME + "</h1>")
+//     }
+//     }).addTo(map);
+// })
+
+
+
+
+let earthquakes = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
+
+
+d3.json(earthquakes).then(function(data){
     L.geoJson(data, {
-        onEachFeature: function(feature, layer){
-            console.log(layer);
-            layer.bindPopup("<h1>" + feature.properties.dst + "</h1>")
-        }
+        pointToLayer: function(feature, latlng) {
+            console.log(data);
+            return L.circleMarker(latlng);
+        }, 
+        style: styleInfo
     }).addTo(map);
-})
+});
+
+function styleInfo(feature) {
+    return {
+      opacity: 1,
+      fillOpacity: 1,
+      fillColor: "#ffae42",
+      color: "#000000",
+      radius: getRadius(feature.properties.mag),
+      stroke: true,
+      weight: 0.5
+    };
+  }
+
+// This function determines the radius of the earthquake marker based on its magnitude.
+// Earthquakes with a magnitude of 0 will be plotted with a radius of 1.
+
+  
+  function getRadius(magnitude){
+      if (magnitude === 0) {
+        return 1;
+      }
+      return magnitude * 4;
+  }
 
 // We create the tile layer that will be the background of our map.
 let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/{z}/{x}/{y}?access_token={accessToken}', {
