@@ -149,7 +149,13 @@ legend.onAdd = function() {
     console.log(data);
     //append the geojson data to the tectonic plates layer 
 
-    L.geoJson(data).addTo(tectonicPlates);
+    L.geoJson(data, {
+      color: "red", 
+      weight: 2, 
+      fillColor: "none", 
+      opacity: .7
+    }
+      ).addTo(tectonicPlates);
   });
   //add tectonic plates layer to map 
   tectonicPlates.addTo(map);
