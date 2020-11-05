@@ -1,7 +1,7 @@
 // Add console.log to check to see if our code is working.
 console.log("working");
 
-let API_KEY = "pk.eyJ1IjoiaGV5ZGVtbyIsImEiOiJja2gzczRzYXYwMWE2MnlwNG91Zm42MW4xIn0.6B_vzs1Ji1enb4_R9IJgxQ"
+let API_KEY = "pk.eyJ1IjoiaGV5ZGVtbyIsImEiOiJja2gzczRzYXYwMWE2MnlwNG91Zm42MW4xIn0.6B_vzs1Ji1enb4_R9IJgxQ";
 
 // We create the tile layer that will be the background of our map.
 let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -17,6 +17,12 @@ let satelliteStreets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/sate
 	accessToken: API_KEY
 });
 
+let dark = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+  arrtribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
+	maxZoom: 18,
+	accessToken: API_KEY
+});
+
 // Create the map object with center, zoom level and default layer.
 let map = L.map('mapid', {
 	center: [40.7, -94.5],
@@ -27,7 +33,8 @@ let map = L.map('mapid', {
 // Create a base layer that holds all three maps.
 let baseMaps = {
   "Streets": streets,
-  "Satellite": satelliteStreets
+  "Satellite": satelliteStreets, 
+  "Dark": dark
 };
 
 // 1. Add a 2nd layer group for the tectonic plate data.
@@ -116,48 +123,48 @@ let legend = L.control({
   position: "bottomright"
 });
 
-// // Then add all the details for the legend
-// legend.onAdd = function() {
-//   let div = L.DomUtil.create("div", "info legend");
+// Then add all the details for the legend
+legend.onAdd = function() {
+  let div = L.DomUtil.create("div", "info legend");
 
-//   const magnitudes = [0, 1, 2, 3, 4, 5];
-//   const colors = [
-//     "#98ee00",
-//     "#d4ee00",
-//     "#eecc00",
-//     "#ee9c00",
-//     "#ea822c",
-//     "#ea2c2c"
-//   ];
+  const magnitudes = [0, 1, 2, 3, 4, 5];
+  const colors = [
+    "#98ee00",
+    "#d4ee00",
+    "#eecc00",
+    "#ee9c00",
+    "#ea822c",
+    "#ea2c2c"
+  ];
 
-// // Looping through our intervals to generate a label with a colored square for each interval.
-//   for (var i = 0; i < magnitudes.length; i++) {
-//     console.log(colors[i]);
-//     div.innerHTML +=
-//       "<i style='background: " + colors[i] + "'></i> " +
-//       magnitudes[i] + (magnitudes[i + 1] ? "&ndash;" + magnitudes[i + 1] + "<br>" : "+");
-//     }
-//     return div;
-//   };
+// Looping through our intervals to generate a label with a colored square for each interval.
+  for (var i = 0; i < magnitudes.length; i++) {
+    console.log(colors[i]);
+    div.innerHTML +=
+      "<i style='background: " + colors[i] + "'></i> " +
+      magnitudes[i] + (magnitudes[i + 1] ? "&ndash;" + magnitudes[i + 1] + "<br>" : "+");
+    }
+    return div;
+  };
 
-//   // Finally, we our legend to the map.
-//   legend.addTo(map);
+  // Finally, we our legend to the map.
+  legend.addTo(map);
 
-//   // 3. Use d3.json to make a call to get our Tectonic Plate geoJSON data.
-//   let tectonic_url = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_plates.json";
+  // 3. Use d3.json to make a call to get our Tectonic Plate geoJSON data.
+  let tectonic_url = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_plates.json";
   
-//   d3.json(tectonic_url).then(function(data) {
-//     console.log(data);
-//     //append the geojson data to the tectonic plates layer 
+  d3.json(tectonic_url).then(function(data) {
+    console.log(data);
+    //append the geojson data to the tectonic plates layer 
 
-//     L.geoJson(data, {
-//       color: "red", 
-//       weight: 2, 
-//       fillColor: "none", 
-//       opacity: .7
-//     }
-//       ).addTo(tectonicPlates);
-//   });
-//   //add tectonic plates layer to map 
-//   tectonicPlates.addTo(map);
-// });
+    L.geoJson(data, {
+      color: "red", 
+      weight: 2, 
+      fillColor: "none", 
+      opacity: .7
+    }
+      ).addTo(tectonicPlates);
+  });
+  //add tectonic plates layer to map 
+  tectonicPlates.addTo(map);
+});
