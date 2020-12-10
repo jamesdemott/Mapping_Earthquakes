@@ -5,6 +5,9 @@ const API_KEY = "pk.eyJ1IjoiaGV5ZGVtbyIsImEiOiJja2gzczRzYXYwMWE2MnlwNG91Zm42MW4x
 console.log("working");
 
 let API_KEY = "pk.eyJ1IjoiaGV5ZGVtbyIsImEiOiJja2gzczRzYXYwMWE2MnlwNG91Zm42MW4xIn0.6B_vzs1Ji1enb4_R9IJgxQ"
+<<<<<<< HEAD
+>>>>>>> parent of 9ea44ab... ready for submission
+=======
 >>>>>>> parent of 9ea44ab... ready for submission
 
 // We create the tile layer that will be the background of our map.
@@ -22,12 +25,15 @@ let satelliteStreets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/sate
 });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 let dark = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token={accessToken}', {
   arrtribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
 	maxZoom: 25,
 	accessToken: API_KEY
 });
 
+=======
+>>>>>>> parent of 9ea44ab... ready for submission
 =======
 >>>>>>> parent of 9ea44ab... ready for submission
 // Create the map object with center, zoom level and default layer.
@@ -162,6 +168,7 @@ let legend = L.control({
 //   let tectonic_url = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_plates.json";
   
 <<<<<<< HEAD
+<<<<<<< HEAD
   d3.json(tectonic_url).then(function(data) {
     console.log(data);
     //append the geojson data to the tectonic plates layer 
@@ -254,6 +261,8 @@ d3.json(major_earthquakes_url).then(function(data) {
   
   // 9. Close the braces and parentheses for the major earthquake data.
 =======
+=======
+>>>>>>> parent of 9ea44ab... ready for submission
 //   d3.json(tectonic_url).then(function(data) {
 //     console.log(data);
 //     //append the geojson data to the tectonic plates layer 
@@ -269,4 +278,7 @@ d3.json(major_earthquakes_url).then(function(data) {
 //   //add tectonic plates layer to map 
 //   tectonicPlates.addTo(map);
 // });
+<<<<<<< HEAD
+>>>>>>> parent of 9ea44ab... ready for submission
+=======
 >>>>>>> parent of 9ea44ab... ready for submission
